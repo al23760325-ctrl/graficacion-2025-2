@@ -1,0 +1,40 @@
+Preguntas de Repaso
+1. ¿Qué función utilizamos para recortar una parte del sprite sheet?
+
+La función que use es sprite_sheet.subsurface(rect).
+
+sprite_sheet: Se refiere a la imagen completa (personaje_direcciones.png) que cargamos al principio.
+
+rect: Es un objeto pygame.Rect que definimos con la posición (x, y) y el tamaño (ancho, alto) del cuadro específico que queremos extraer.
+
+Esta función nos permite tomar una "sub-área" de la imagen grande para obtener un solo frame de animación.
+
+2. ¿Cómo controlamos la velocidad de animación?
+La velocidad de animación (es decir, la rapidez con la que el personaje cambia de frame mientras camina) se controla mediante dos variables:
+
+tiempo_animacion = 150: Este valor (en milisegundos) define cuánto tiempo debe pasar entre un frame y el siguiente.
+
+Un valor más bajo (por ejemplo, 50) hace que la animación sea más rápida.
+
+Un valor más alto (por ejemplo, 300) hace que la animación sea más lenta.
+
+ultimo_tiempo y ahora: Dentro del bucle principal, comparamos el tiempo actual (ahora = pygame.time.get_ticks()) con el momento en que se dibujó el último frame (ultimo_tiempo).
+
+Si ahora - ultimo_tiempo es mayor que tiempo_animacion, cambiamos al siguiente frame y actualizamos ultimo_tiempo.
+
+3. ¿Por qué usamos un diccionario de animaciones en lugar de una sola lista?
+Utilizar un diccionario (animaciones) tiene varias ventajas en términos de organización y lógica:
+
+Asociación Lógica: Permite asociar nombres descriptivos (cadenas de texto como "abajo_walk", "arriba_idle") con sus respectivas listas de frames.
+
+Gestión de Estados: Facilita la gestión de los estados del personaje. Cuando el estado cambia (por ejemplo, de "abajo_idle" a "abajo_walk"), simplemente usamos el valor de la variable estado como clave para acceder a la lista de frames correcta, como por ejemplo: animaciones[estado].
+
+Flexibilidad: Si en el futuro decides añadir nuevas animaciones (como "abajo_attack", "arriba_jump"), solo necesitas agregar una nueva entrada al diccionario.
+
+:
+4. ¿Qué ventaja tiene usar pygame.time.get_ticks()?
+La gran ventaja es que asegura que la velocidad de animación sea independiente de la velocidad de fotogramas (FPS) del juego.
+
+pygame.time.get_ticks() nos da la cantidad de milisegundos que han pasado desde que Pygame fue inicializado.
+
+Al calcular la diferencia de tiempo (ahora - ultimo_tiempo), garantizamos que la animación progrese a una velocidad constante (los 150ms que definimos), sin importar si el juego se está ejecutando más lento o más rápido (por ejemplo, si los FPS caen por debajo de 60). Esto se conoce como animación basada en el tiempo.
